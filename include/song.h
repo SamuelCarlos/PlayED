@@ -15,4 +15,8 @@ void printSong(Song* song);
 
 char *getArtistName(Song *song);
 
+char *getSongName(Song *song);
+
+void printSonginFile(Song* song,FILE* file);
+
 #endif //SONG_H

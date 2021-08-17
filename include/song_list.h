@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/song.h"
-
 typedef struct SongList SongList;
+
+#include "../include/song.h"
+#include "../include/playlist_list.h"
 
 SongList* initializeSongList(SongList* list);
 
@@ -17,5 +18,9 @@ void freeSongList(SongList* list);
 SongList* readEachPlaylistFile(SongList* list, char* fileName);
 
 void printSongList(SongList* list);
+
+void refactoredSongList(SongList* list,PlaylistList* playlistlist);
+
+void printSongListinFile(SongList* list,FILE* file);
 
 #endif //SONG_LIST_H

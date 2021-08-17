@@ -66,25 +66,43 @@ void printPlaylistList(PlaylistList* list){
     }
 }
 
-PlaylistList *organizePlaylistByArtist(PlaylistList* list){
-    Cell *aux = list->head;
+PlaylistList* organizePlaylistByArtist(PlaylistList* list){
+    Cell* aux = list->head;
     PlaylistList *newPlaylistList = NULL;
-    char *newPlaylistName = NULL;
 
     newPlaylistList = initializePlaylistList(newPlaylistList);
 
     while(aux != NULL) {
-        newPlaylistList = createNewPlaylistByArtistName(newPlaylistList, aux->playlist);
+        refactoredSongList(getSongList(aux->playlist),newPlaylistList);
         aux = aux->next;
     }
-
+    freePlaylistList(list);
     return newPlaylistList;
 }
 
-PlaylistList *createNewPlaylistByArtistName(PlaylistList *newPlaylistList, Playlist *playlist) {
-    Playlist *newPlaylist = NULL;
-
-    newPlaylist = initializePlaylist(newPlaylist);
-
-    
+void* findPlaylist(PlaylistList* list,char* playlistname){
+    Cell* aux = list->head;
+    while(aux != NULL){
+        if(strcmp(playlistname,getPlaylistName(aux->playlist)) == 0){
+            return aux->playlist;
+        }
+        aux = aux->next;
+    }
+    return NULL;
 }
+
+void createPlaylistsFiles(PlaylistList* list, char* directory){
+    Cell* aux = list->head;
+    FILE* file;
+    char merge1[100];
+    char merge2[200];
+    sprintf(merge1, "data/saida/%s", directory);
+    while(aux != NULL){
+        sprintf(merge2, "%s/%s.txt", merge1,getPlaylistName(aux->playlist));
+        file = fopen(merge2,"w");
+        printPlaylistinFile(aux->playlist,file);
+        fclose(file);
+        aux = aux->next;
+    }
+}
+

@@ -33,3 +33,13 @@ void printSong(Song* song) {
 char *getArtistName(Song *song) {
     return song->artist;
 }
+
+char *getSongName(Song *song) {
+    return song->artist;
+}
+
+void printSonginFile(Song* song, FILE* file) {
+    if(song->name && song->artist) {
+        fprintf(file,"        .%s-%s\n", song->artist, song->name);
+    }
+}

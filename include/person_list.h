@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/person.h"
-
 typedef struct PersonList PersonList;
+
+#include "../include/person.h"
 
 PersonList* readFriendshipFile(PersonList* person_list);
 

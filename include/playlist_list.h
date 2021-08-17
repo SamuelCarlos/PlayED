@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/playlist.h"
-
 typedef struct PlaylistList PlaylistList;
+
+#include "../include/playlist.h"
 
 PlaylistList* initializePlaylistList(PlaylistList* list);
 
@@ -18,6 +18,8 @@ void printPlaylistList(PlaylistList* list);
 
 PlaylistList *organizePlaylistByArtist(PlaylistList* list);
 
-PlaylistList *createNewPlaylistByArtistName(PlaylistList *newPlaylistList, Playlist *playlist);
+void* findPlaylist(PlaylistList* list,char* playlistname);
+
+void createPlaylistsFiles(PlaylistList* list, char* directory);
 
 #endif //PLAYLIST_LIST_H

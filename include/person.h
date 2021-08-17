@@ -9,10 +9,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+typedef struct Person Person;
+
 #include "../include/friendship.h"
 #include "../include/playlist_list.h"
-
-typedef struct Person Person;
 
 Person* createPerson(char* name);
 

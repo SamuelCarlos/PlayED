@@ -115,3 +115,37 @@ void printSongList(SongList* list){
         aux = aux->next;
     }
 }
+
+void refactoredSongList(SongList* list, PlaylistList* playlistlist){
+    Cell* aux = list->head;
+    Playlist* playlistaux;
+    
+    while(aux != NULL){
+        playlistaux = findPlaylist(playlistlist,getArtistName(aux->song));
+
+        if(playlistaux == NULL){
+            Song* newsong = createSong(getSongName(aux->song),getArtistName(aux->song));
+            SongList* newsonglist = initializeSongList(newsonglist);
+            insertSongList(newsonglist,newsong);
+            insertPlaylistList(playlistlist,getArtistName(aux->song),newsonglist);
+        }
+        else{
+            Song* newsong = createSong(getSongName(aux->song),getArtistName(aux->song));
+            insertSongList(getSongList(playlistaux),newsong);
+        }
+    
+        aux = aux->next;
+   }
+}
+
+void printSongListinFile(SongList* list,FILE* file){
+    Cell* aux = list->head;
+
+    while(aux != NULL) {
+        if(aux->song) {
+            printSonginFile(aux->song,file);
+        }
+        aux = aux->next;
+    }
+}
+

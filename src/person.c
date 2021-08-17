@@ -65,7 +65,10 @@ void createPlaylistList(Person* person, char* name, SongList* songList) {
 
 Person *organizePersonPlaylistByArtist(Person* person) {
     char *directory = NULL;
-    
+
+    if(stat("data/saida", &dir) == -1) {
+        mkdir("data/saida", 0755);
+    }
     if(person->playlists && person->name){
         directory = (char *) calloc((int) strlen("data/saida/") + (int) strlen(person->name) + 1, sizeof(char));
         sprintf(directory, "data/saida/%s", person->name);
@@ -74,9 +77,8 @@ Person *organizePersonPlaylistByArtist(Person* person) {
         }
         free(directory);
 
-        
-
         person->playlists = organizePlaylistByArtist(person->playlists);
+        createPlaylistsFiles(person->playlists,person->name);
     }
 
     return person;
