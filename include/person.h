@@ -28,4 +28,16 @@ void createPlaylistList(Person* person, char* name, SongList* songList);
 
 Person *organizePersonPlaylistByArtist(Person* person);
 
+void fillRefactoredFile(FILE *file, Person* person);
+
+char *getPersonName(Person *person);
+
+int verifyFriendship(Person *person, char *friend);
+
+int verifyEqualPlaylists(Person *person, Person *friend);
+
+void organizeFilesPersonPlaylistByArtist(Person *person);
+
+Person *mergePersonWithFriend(Person *person, Person *friend);
+
 #endif //PERSON_H

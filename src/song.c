@@ -26,7 +26,7 @@ void freeSong(Song* song){
 
 void printSong(Song* song) {
     if(song->name && song->artist) {
-        printf("        .%s-%s\n", song->artist, song->name);
+        printf("        .%s -%s\n", song->artist, song->name);
     }
 }
 
@@ -35,11 +35,11 @@ char *getArtistName(Song *song) {
 }
 
 char *getSongName(Song *song) {
-    return song->artist;
+    return song->name;
 }
 
 void printSonginFile(Song* song, FILE* file) {
     if(song->name && song->artist) {
-        fprintf(file,"        .%s-%s\n", song->artist, song->name);
+        fprintf(file,"%s -%s\n", song->artist, song->name);
     }
 }

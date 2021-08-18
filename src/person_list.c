@@ -5,6 +5,7 @@ typedef struct Cell Cell;
 struct Cell {
     Person* person;
     Cell* next;
+    Cell* prev;
 };
 
 struct PersonList {
@@ -150,7 +151,9 @@ void insertPersonListCell(PersonList* list, Person* person) {
 
     if(list->head == NULL) {
         list->head = newPosition;
+        newPosition->prev = NULL;
     } else {
+        newPosition->prev = list->tail;
         list->tail->next = newPosition;
     }
 
@@ -211,12 +214,94 @@ void addPlaylist(PersonList* list, char* personName, char* playlistName){
 
 PersonList *organizePersonListPlaylistsByArtist(PersonList *list) {
     Cell *aux = list->head;
+    FILE *refactored = NULL;
+
+    refactored = fopen("data/saida/played-refatorada.txt", "w");
+
     while(aux != NULL) {    
         if(aux->person){
-            aux->person = organizePersonPlaylistByArtist(aux->person);            
+            aux->person = organizePersonPlaylistByArtist(aux->person);     
+            fillRefactoredFile(refactored, aux->person);       
+            if(aux->next != NULL) fprintf(refactored, "\n"); 
         }
 
         aux = aux->next;
+    }
+
+    fclose(refactored);
+    return list;
+}
+
+void createOutputFiles(PersonList *list) {
+    Cell *aux = list->head;
+
+    
+    while(aux != NULL) {    
+        if(aux->person){
+            organizeFilesPersonPlaylistByArtist(aux->person);     
+        }
+
+        aux = aux->next;
+    }
+}
+
+void createSimilarities(PersonList *list) {
+    Cell *aux = list->head;
+    Cell *iteratorAux = NULL;
+    FILE *similarities = NULL;
+    int equalPlaylists = 0;
+
+    similarities = fopen("data/saida/similaridades.txt", "w");
+
+    while(aux != NULL) {    
+        iteratorAux = aux->next;
+
+        while(iteratorAux != NULL) {
+            if(verifyFriendship(aux->person, getPersonName(iteratorAux->person))) {
+                equalPlaylists = verifyEqualPlaylists(aux->person, iteratorAux->person);
+                fprintf(similarities, "%s;%s;%d\n", getPersonName(aux->person), getPersonName(iteratorAux->person), equalPlaylists);
+            }
+            iteratorAux = iteratorAux->next;
+        }
+
+        aux = aux->next;
+    }
+
+    fclose(similarities);
+}
+
+PersonList *merge(PersonList *list) {
+    Cell *aux = list->head;
+    Cell *iteratorAux = NULL;
+
+    while(aux != NULL) {
+        iteratorAux = list->head;
+        
+        while (iteratorAux != NULL) {
+            if(aux->person && iteratorAux->person) {
+                 if(verifyFriendship(aux->person, getPersonName(iteratorAux->person))) {
+                    aux->person = mergePersonWithFriend(aux->person,iteratorAux->person);
+                }
+            }
+
+            iteratorAux = iteratorAux->next;
+        }
+        aux = aux->next;
+    }
+
+    aux = list->tail;
+    while(aux != NULL) {
+        iteratorAux = list->tail;
+         while (iteratorAux != NULL) {
+            if(aux->person && iteratorAux->person) {
+                 if(verifyFriendship(aux->person, getPersonName(iteratorAux->person))) {
+                    aux->person = mergePersonWithFriend(aux->person,iteratorAux->person);
+                }
+            }
+
+            iteratorAux = iteratorAux->prev;
+        }
+        aux = aux->prev;
     }
 
     return list;

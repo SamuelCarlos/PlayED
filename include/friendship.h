@@ -15,4 +15,6 @@ void freeFriendship(Friendship* list);
 
 void printFriendship(Friendship* friendship);
 
+int friendIterator(Friendship* friendship, char *friend);
+
 #endif //FRIENDSHIP_H

@@ -26,4 +26,10 @@ void addPlaylist(PersonList* list, char* personName, char* playlistName);
 
 PersonList *organizePersonListPlaylistsByArtist(PersonList *list);
 
+void createSimilarities(PersonList *list);
+
+void createOutputFiles(PersonList *list);
+
+PersonList *merge(PersonList *list);
+
 #endif //PERSON_LIST_H

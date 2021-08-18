@@ -56,8 +56,28 @@ char* getPlaylistName(Playlist* playlist){
     return playlist->name;
 }
 
-void printPlaylistinFile(Playlist* playlist,FILE* file){
+void printPlaylistinFile(Playlist* playlist, FILE* file){
         if(playlist->songs != NULL) {
             printSongListinFile(playlist->songs,file);
         }
+}
+
+int musicsComparator(Playlist *personPlaylist, Playlist *friendPlaylist) {
+    return songListComparator(personPlaylist->songs, friendPlaylist->songs);
+}
+
+Playlist* joinPlaylistSongs(Playlist *personPlaylist, Playlist *friendPlaylist) {
+    SongList *aux;
+
+    aux = sumSonglists(personPlaylist->songs, friendPlaylist->songs);
+
+    freeSongList(personPlaylist->songs);
+    freeSongList(friendPlaylist->songs);
+    
+    personPlaylist->songs = duplicateSongList(aux);
+    friendPlaylist->songs = duplicateSongList(aux);
+
+    freeSongList(aux);
+
+    return personPlaylist;
 }

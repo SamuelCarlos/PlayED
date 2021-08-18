@@ -64,12 +64,20 @@ void createPlaylistList(Person* person, char* name, SongList* songList) {
 }
 
 Person *organizePersonPlaylistByArtist(Person* person) {
+    if(person->playlists){
+        person->playlists = organizePlaylistByArtist(person->playlists);
+    }
+
+    return person;
+}
+
+void organizeFilesPersonPlaylistByArtist(Person *person) {
     char *directory = NULL;
 
     if(stat("data/saida", &dir) == -1) {
         mkdir("data/saida", 0755);
     }
-    if(person->playlists && person->name){
+     if(person->playlists && person->name){
         directory = (char *) calloc((int) strlen("data/saida/") + (int) strlen(person->name) + 1, sizeof(char));
         sprintf(directory, "data/saida/%s", person->name);
         if(stat(directory, &dir) == -1) {
@@ -77,9 +85,38 @@ Person *organizePersonPlaylistByArtist(Person* person) {
         }
         free(directory);
 
-        person->playlists = organizePlaylistByArtist(person->playlists);
-        createPlaylistsFiles(person->playlists,person->name);
+        createPlaylistsFiles(person->playlists, person->name);
     }
+
+}
+
+void fillRefactoredFile(FILE *file, Person* person) {
+    int playlistsCount = 0;
+
+    if(person->name){
+        fprintf(file, "%s;", person->name);
+    }
+    if(person->playlists) {
+        playlistsCount = countPersonPlaylists(person->playlists);
+        fprintf(file, "%d;", playlistsCount);
+        printPlaylistNameOnFile(file, person->playlists);
+    }
+}
+
+char *getPersonName(Person *person) {
+    return person->name;
+}
+
+int verifyFriendship(Person *person, char *friend) {
+    return friendIterator(person->friends, friend);
+}
+
+int verifyEqualPlaylists(Person *person, Person *friend) {
+    return playlistsComparator(person->playlists, friend->playlists);
+}
+
+Person *mergePersonWithFriend(Person *person, Person *friend) {
+    person->playlists = mergePlaylists(person->playlists, friend->playlists);
 
     return person;
 }

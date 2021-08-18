@@ -69,7 +69,6 @@ SongList* readEachPlaylistFile(SongList* list, char* fileName){
         free(fileDir);
         return NULL;
     }
-
     do{
         bufsize = 32;
 
@@ -91,6 +90,7 @@ SongList* readEachPlaylistFile(SongList* list, char* fileName){
             free(pointer);
             break;
         }
+        token[strlen(token) - 1] = '\0';
 
         song = createSong(pointer, token);
         insertSongList(list, song);
@@ -100,6 +100,7 @@ SongList* readEachPlaylistFile(SongList* list, char* fileName){
     }while(1);
 
     fclose(file);
+    // remove(fileDir);
     free(fileDir);
 
     return list;
@@ -121,17 +122,17 @@ void refactoredSongList(SongList* list, PlaylistList* playlistlist){
     Playlist* playlistaux;
     
     while(aux != NULL){
-        playlistaux = findPlaylist(playlistlist,getArtistName(aux->song));
+        playlistaux = findPlaylist(playlistlist, getArtistName(aux->song));
 
         if(playlistaux == NULL){
-            Song* newsong = createSong(getSongName(aux->song),getArtistName(aux->song));
+            Song* newsong = createSong(getSongName(aux->song), getArtistName(aux->song));
             SongList* newsonglist = initializeSongList(newsonglist);
-            insertSongList(newsonglist,newsong);
-            insertPlaylistList(playlistlist,getArtistName(aux->song),newsonglist);
+            insertSongList(newsonglist, newsong);
+            insertPlaylistList(playlistlist,getArtistName(aux->song), newsonglist);
         }
         else{
-            Song* newsong = createSong(getSongName(aux->song),getArtistName(aux->song));
-            insertSongList(getSongList(playlistaux),newsong);
+            Song* newsong = createSong(getSongName(aux->song), getArtistName(aux->song));
+            insertSongList(getSongList(playlistaux), newsong);
         }
     
         aux = aux->next;
@@ -149,3 +150,97 @@ void printSongListinFile(SongList* list,FILE* file){
     }
 }
 
+int songListComparator(SongList *personSongList, SongList *friendSongList) {
+    Cell *aux = personSongList->head;
+    Cell *iteratorAux = NULL;
+    int equalSongs = 0;
+
+    while(aux != NULL) {
+        iteratorAux = friendSongList->head;
+
+        while(iteratorAux != NULL) {
+            if(aux->song && iteratorAux->song) {
+                if(strcmp(getSongName(aux->song), getSongName(iteratorAux->song)) == 0) {
+                    equalSongs++;
+                }
+            }
+
+            iteratorAux = iteratorAux->next;
+        }
+
+        aux = aux->next;
+    }
+
+    return equalSongs;
+}
+
+SongList *sumSonglists(SongList *personSongList, SongList *friendSongList) {
+    Cell *aux = personSongList->head;
+    Cell *iteratorAux = NULL;
+    Cell *newSongListIterator = NULL;
+    SongList *newSongList = NULL;
+    int hasEqualSong = 0;
+
+    newSongList = initializeSongList(newSongList);
+
+    aux = personSongList->head;
+    while (aux != NULL) {
+        hasEqualSong = 0;
+        newSongListIterator = newSongList->head;
+
+        while(newSongListIterator != NULL) {
+            if(strcmp(getSongName(newSongListIterator->song), getSongName(aux->song)) == 0) {
+                hasEqualSong = 1;
+                break;
+            }
+            
+            newSongListIterator = newSongListIterator->next;
+        }
+        if(!hasEqualSong) {
+            Song* newSong = createSong(getSongName(aux->song), getArtistName(aux->song));
+            insertSongList(newSongList, newSong);
+        }
+        aux = aux->next;
+    }
+
+    iteratorAux = friendSongList->head;
+    while (iteratorAux != NULL) {
+        hasEqualSong = 0;
+        newSongListIterator = newSongList->head;
+
+        while(newSongListIterator != NULL) {    
+            if(strcmp(getSongName(newSongListIterator->song), getSongName(iteratorAux->song)) == 0) {
+                hasEqualSong = 1;
+            }
+    
+            newSongListIterator = newSongListIterator->next;
+        }
+        if(!hasEqualSong) {
+            Song* newSong = createSong(getSongName(iteratorAux->song), getArtistName(iteratorAux->song));
+            insertSongList(newSongList, newSong);
+        }
+        
+        iteratorAux = iteratorAux->next;
+    }
+
+   
+    return newSongList;
+}
+
+SongList *duplicateSongList(SongList *list) {
+    Cell *aux = list->head;
+
+    SongList *newSongList = NULL;
+    newSongList = initializeSongList(newSongList);
+
+    while(aux != NULL) {
+        if(aux->song) {
+            Song* newSong = createSong(getSongName(aux->song), getArtistName(aux->song));
+            insertSongList(newSongList, newSong);
+        }
+
+        aux = aux->next;
+    }
+
+    return newSongList;
+}

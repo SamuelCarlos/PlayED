@@ -11,10 +11,17 @@ int startApplication() {
     person_list = readFriendshipFile(person_list);
     person_list = readPlaylistsFile(person_list);
     
-    printPersonList(person_list);
+    // printPersonList(person_list);
     
     person_list = organizePersonListPlaylistsByArtist(person_list);
-    printPersonList(person_list);
+    // printPersonList(person_list);
+
+    person_list = merge(person_list);
+
+    // printPersonList(person_list);
+    createOutputFiles(person_list);
+
+    createSimilarities(person_list);
 
     freePersonList(person_list);
     return 1;

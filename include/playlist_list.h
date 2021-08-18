@@ -22,4 +22,12 @@ void* findPlaylist(PlaylistList* list,char* playlistname);
 
 void createPlaylistsFiles(PlaylistList* list, char* directory);
 
+int countPersonPlaylists(PlaylistList* list);
+
+void printPlaylistNameOnFile(FILE *file, PlaylistList* list);
+
+int playlistsComparator(PlaylistList *personPlaylists, PlaylistList *friendPlaylists);
+
+PlaylistList *mergePlaylists(PlaylistList *personPlaylists, PlaylistList *friendPlaylists);
+
 #endif //PLAYLIST_LIST_H
