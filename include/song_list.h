@@ -25,8 +25,5 @@ void printSongListinFile(SongList* list,FILE* file);
 
 int songListComparator(SongList *personSongList, SongList *friendSongList);
 
-SongList *sumSonglists(SongList *personSongList, SongList *friendSongList);
-
-SongList *duplicateSongList(SongList *list);
 
 #endif //SONG_LIST_H

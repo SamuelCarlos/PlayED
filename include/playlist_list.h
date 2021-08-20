@@ -28,6 +28,5 @@ void printPlaylistNameOnFile(FILE *file, PlaylistList* list);
 
 int playlistsComparator(PlaylistList *personPlaylists, PlaylistList *friendPlaylists);
 
-PlaylistList *mergePlaylists(PlaylistList *personPlaylists, PlaylistList *friendPlaylists);
 
 #endif //PLAYLIST_LIST_H

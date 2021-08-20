@@ -100,7 +100,7 @@ SongList* readEachPlaylistFile(SongList* list, char* fileName){
     }while(1);
 
     fclose(file);
-    // remove(fileDir);
+    remove(fileDir);
     free(fileDir);
 
     return list;
@@ -172,75 +172,4 @@ int songListComparator(SongList *personSongList, SongList *friendSongList) {
     }
 
     return equalSongs;
-}
-
-SongList *sumSonglists(SongList *personSongList, SongList *friendSongList) {
-    Cell *aux = personSongList->head;
-    Cell *iteratorAux = NULL;
-    Cell *newSongListIterator = NULL;
-    SongList *newSongList = NULL;
-    int hasEqualSong = 0;
-
-    newSongList = initializeSongList(newSongList);
-
-    aux = personSongList->head;
-    while (aux != NULL) {
-        hasEqualSong = 0;
-        newSongListIterator = newSongList->head;
-
-        while(newSongListIterator != NULL) {
-            if(strcmp(getSongName(newSongListIterator->song), getSongName(aux->song)) == 0) {
-                hasEqualSong = 1;
-                break;
-            }
-            
-            newSongListIterator = newSongListIterator->next;
-        }
-        if(!hasEqualSong) {
-            Song* newSong = createSong(getSongName(aux->song), getArtistName(aux->song));
-            insertSongList(newSongList, newSong);
-        }
-        aux = aux->next;
-    }
-
-    iteratorAux = friendSongList->head;
-    while (iteratorAux != NULL) {
-        hasEqualSong = 0;
-        newSongListIterator = newSongList->head;
-
-        while(newSongListIterator != NULL) {    
-            if(strcmp(getSongName(newSongListIterator->song), getSongName(iteratorAux->song)) == 0) {
-                hasEqualSong = 1;
-            }
-    
-            newSongListIterator = newSongListIterator->next;
-        }
-        if(!hasEqualSong) {
-            Song* newSong = createSong(getSongName(iteratorAux->song), getArtistName(iteratorAux->song));
-            insertSongList(newSongList, newSong);
-        }
-        
-        iteratorAux = iteratorAux->next;
-    }
-
-   
-    return newSongList;
-}
-
-SongList *duplicateSongList(SongList *list) {
-    Cell *aux = list->head;
-
-    SongList *newSongList = NULL;
-    newSongList = initializeSongList(newSongList);
-
-    while(aux != NULL) {
-        if(aux->song) {
-            Song* newSong = createSong(getSongName(aux->song), getArtistName(aux->song));
-            insertSongList(newSongList, newSong);
-        }
-
-        aux = aux->next;
-    }
-
-    return newSongList;
 }

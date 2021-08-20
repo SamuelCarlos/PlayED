@@ -27,6 +27,4 @@ void printPlaylistinFile(Playlist* playlist,FILE* file);
 
 int musicsComparator(Playlist *personPlaylist, Playlist *friendPlaylist);
 
-Playlist* joinPlaylistSongs(Playlist *personPlaylist, Playlist *friendPlaylist);
-
 #endif //PLAYLIST_H

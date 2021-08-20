@@ -38,6 +38,5 @@ int verifyEqualPlaylists(Person *person, Person *friend);
 
 void organizeFilesPersonPlaylistByArtist(Person *person);
 
-Person *mergePersonWithFriend(Person *person, Person *friend);
 
 #endif //PERSON_H

@@ -150,25 +150,3 @@ int playlistsComparator(PlaylistList *personPlaylists, PlaylistList *friendPlayl
     return equalPlaylists;
 }
 
-PlaylistList *mergePlaylists(PlaylistList *personPlaylists, PlaylistList *friendPlaylists) {
-    Cell *personAux = personPlaylists->head;
-    Cell *friendAux = NULL;
-
-    while(personAux != NULL) {
-        friendAux = friendPlaylists->head;
-
-        while(friendAux != NULL) {
-            if(personAux->playlist && friendAux->playlist) {
-                if(strcmp(getPlaylistName(personAux->playlist), getPlaylistName(friendAux->playlist)) == 0) {
-                    personAux->playlist = joinPlaylistSongs(personAux->playlist, friendAux->playlist);
-                }
-            }
-
-            friendAux = friendAux->next;
-        }
-
-        personAux = personAux->next;
-    }
-
-    return personPlaylists;
-}

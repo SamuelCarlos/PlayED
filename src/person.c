@@ -115,8 +115,3 @@ int verifyEqualPlaylists(Person *person, Person *friend) {
     return playlistsComparator(person->playlists, friend->playlists);
 }
 
-Person *mergePersonWithFriend(Person *person, Person *friend) {
-    person->playlists = mergePlaylists(person->playlists, friend->playlists);
-
-    return person;
-}

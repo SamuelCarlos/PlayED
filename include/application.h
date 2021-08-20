@@ -8,6 +8,11 @@
 #include "../include/person.h"
 #include "../include/person_list.h"
 
+/**
+ * Application start point
+ * 
+ * @return 1: application run well
+*/
 int startApplication();
 
 #endif //APPLICATION_H
