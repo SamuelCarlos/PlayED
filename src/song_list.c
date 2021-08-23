@@ -100,7 +100,6 @@ SongList* readEachPlaylistFile(SongList* list, char* fileName){
     }while(1);
 
     fclose(file);
-    remove(fileDir);
     free(fileDir);
 
     return list;
