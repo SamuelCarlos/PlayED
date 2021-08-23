@@ -3,7 +3,7 @@
 /** 
  * 
  */
-int startApplication() {
+void startApplication() {
     PersonList* person_list = NULL;
     PlaylistList* playlists = NULL;
     // initialize and feed a person list with files data
@@ -23,5 +23,4 @@ int startApplication() {
     createSimilarities(person_list);
 
     freePersonList(person_list);
-    return 1;
 }
