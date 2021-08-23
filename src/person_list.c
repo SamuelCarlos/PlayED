@@ -5,7 +5,6 @@ typedef struct Cell Cell;
 struct Cell {
     Person* person;
     Cell* next;
-    Cell* prev;
 };
 
 struct PersonList {
@@ -151,9 +150,7 @@ void insertPersonListCell(PersonList* list, Person* person) {
 
     if(list->head == NULL) {
         list->head = newPosition;
-        newPosition->prev = NULL;
     } else {
-        newPosition->prev = list->tail;
         list->tail->next = newPosition;
     }
 
