@@ -1,6 +1,3 @@
 Joao;Maria;0
 Joao;Pedro;0
-Joao;Alice;0
-Pedro;Carlos;0
-Alice;Chiquinha;0
-Carlos;Quico;0
+Pedro;Alice;5

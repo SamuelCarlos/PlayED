@@ -6,7 +6,7 @@ struct Person {
     PlaylistList* playlists;
 };
 
-struct stat dir = {0};
+struct stat direct = {0};
 
 Person* createPerson(char* name) {
     Person* newPerson = (Person* ) calloc(1, sizeof(Person));
@@ -74,13 +74,10 @@ Person *organizePersonPlaylistByArtist(Person* person) {
 void organizeFilesPersonPlaylistByArtist(Person *person) {
     char *directory = NULL;
 
-    if(stat("data/saida", &dir) == -1) {
-        mkdir("data/saida", 0755);
-    }
      if(person->playlists && person->name){
         directory = (char *) calloc((int) strlen("data/saida/") + (int) strlen(person->name) + 1, sizeof(char));
         sprintf(directory, "data/saida/%s", person->name);
-        if(stat(directory, &dir) == -1) {
+        if(stat(directory, &direct) == -1) {
             mkdir(directory, 0755);
         }
         free(directory);

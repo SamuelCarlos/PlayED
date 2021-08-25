@@ -1,7 +1,4 @@
-Joao;Maria;Pedro;Alice;Carlos;Chiquinha;Quico
+Joao;Maria;Pedro;Alice
 Joao;Maria
 Joao;Pedro
-Joao;Alice
-Pedro;Carlos
-Carlos;Quico
-Alice;Chiquinha
+Pedro;Alice

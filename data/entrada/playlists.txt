@@ -1,7 +1,4 @@
-Joao;1;joao.txt
-Maria;1;maria.txt
-Pedro;1;pedro.txt
-Alice;1;alice.txt
-Carlos;1;carlos.txt
-Chiquinha;1;chiquinha.txt
-Quico;1;quico.txt
+Joao;3;acoustic-hits.txt;nacional.txt;heavymetal.txt
+Maria;2;sertanejo.txt;metal.txt
+Pedro;1;eletronica.txt
+Alice;2;sert.txt;eletrica.txt

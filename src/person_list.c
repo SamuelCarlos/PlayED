@@ -12,6 +12,7 @@ struct PersonList {
     Cell* tail;
 };
 
+struct stat dir = {0};
 
 PersonList* readFriendshipFile(PersonList* person_list) {
     int row_parser;
@@ -212,6 +213,10 @@ void addPlaylist(PersonList* list, char* personName, char* playlistName){
 PersonList *organizePersonListPlaylistsByArtist(PersonList *list) {
     Cell *aux = list->head;
     FILE *refactored = NULL;
+
+    if(stat("data/saida", &dir) == -1) {
+        mkdir("data/saida", 0755);
+    }
 
     refactored = fopen("data/saida/played-refatorada.txt", "w");
 
