@@ -44,10 +44,6 @@ Playlist* initializePlaylist(Playlist* newplaylist){
     return newplaylist;
 }
 
-Playlist* refactoredPlaylist(Playlist* playlist){
-    return playlist;
-}
-
 SongList* getSongList(Playlist* playlist){
     return playlist->songs;
 }

@@ -8,7 +8,7 @@
 #include "../include/person_list.h"
 
 /**
- * Application start point
+ * @brief Application start point
 */
 void startApplication();
 

@@ -16,6 +16,7 @@ Friendship* initializeFriendship(Friendship* newFriendship);
 
 /**
  * @brief creates a new cell with the new friend and insert in frendship list;
+ * @param list: the friendship list;
  * @param friendName: the name of the new friend;
  * @return the list with the new cell ;
  */
