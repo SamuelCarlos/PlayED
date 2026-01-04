@@ -6,7 +6,7 @@ struct Person {
     PlaylistList* playlists;
 };
 
-struct stat dir = {0};
+struct stat direct = {0};
 
 Person* createPerson(char* name) {
     Person* newPerson = (Person* ) calloc(1, sizeof(Person));
@@ -64,20 +64,51 @@ void createPlaylistList(Person* person, char* name, SongList* songList) {
 }
 
 Person *organizePersonPlaylistByArtist(Person* person) {
-    char *directory = NULL;
-    
-    if(person->playlists && person->name){
-        directory = (char *) calloc((int) strlen("data/saida/") + (int) strlen(person->name) + 1, sizeof(char));
-        sprintf(directory, "data/saida/%s", person->name);
-        if(stat(directory, &dir) == -1) {
-            mkdir(directory, 0755);
-        }
-        free(directory);
-
-        
-
+    if(person->playlists){
         person->playlists = organizePlaylistByArtist(person->playlists);
     }
 
     return person;
 }
+
+void organizeFilesPersonPlaylistByArtist(Person *person) {
+    char *directory = NULL;
+
+     if(person->playlists && person->name){
+        directory = (char *) calloc((int) strlen("data/saida/") + (int) strlen(person->name) + 1, sizeof(char));
+        sprintf(directory, "data/saida/%s", person->name);
+        if(stat(directory, &direct) == -1) {
+            mkdir(directory, 0755);
+        }
+        free(directory);
+
+        createPlaylistsFiles(person->playlists, person->name);
+    }
+
+}
+
+void fillRefactoredFile(FILE *file, Person* person) {
+    int playlistsCount = 0;
+
+    if(person->name){
+        fprintf(file, "%s;", person->name);
+    }
+    if(person->playlists) {
+        playlistsCount = countPersonPlaylists(person->playlists);
+        fprintf(file, "%d;", playlistsCount);
+        printPlaylistNameOnFile(file, person->playlists);
+    }
+}
+
+char *getPersonName(Person *person) {
+    return person->name;
+}
+
+int verifyFriendship(Person *person, char *friend) {
+    return friendIterator(person->friends, friend);
+}
+
+int verifyEqualPlaylists(Person *person, Person *friend) {
+    return playlistsComparator(person->playlists, friend->playlists);
+}
+

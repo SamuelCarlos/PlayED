@@ -7,8 +7,8 @@ struct Playlist {
 
 Playlist* createPlaylist(Playlist* playlist, char* name, SongList* songList){
     playlist = (Playlist* ) calloc(1, sizeof(Playlist));
-    
     playlist->name = strdup(name);
+    
     if(songList) {
         playlist->songs = songList;
     } else {
@@ -36,3 +36,29 @@ void printPlaylist(Playlist* playlist){
         }
     }
 }
+
+Playlist* initializePlaylist(Playlist* newplaylist){
+    newplaylist = (Playlist*) calloc(1,sizeof(Playlist));
+    newplaylist->name = NULL;
+    newplaylist->songs = NULL;
+    return newplaylist;
+}
+
+SongList* getSongList(Playlist* playlist){
+    return playlist->songs;
+}
+
+char* getPlaylistName(Playlist* playlist){
+    return playlist->name;
+}
+
+void printPlaylistinFile(Playlist* playlist, FILE* file){
+        if(playlist->songs != NULL) {
+            printSongListinFile(playlist->songs,file);
+        }
+}
+
+int musicsComparator(Playlist *personPlaylist, Playlist *friendPlaylist) {
+    return songListComparator(personPlaylist->songs, friendPlaylist->songs);
+}
+

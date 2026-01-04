@@ -4,10 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/files.h"
 #include "../include/person.h"
 #include "../include/person_list.h"
 
-int startApplication();
+/**
+ * @brief Application start point
+*/
+void startApplication();
 
 #endif //APPLICATION_H

@@ -69,7 +69,6 @@ SongList* readEachPlaylistFile(SongList* list, char* fileName){
         free(fileDir);
         return NULL;
     }
-
     do{
         bufsize = 32;
 
@@ -91,6 +90,7 @@ SongList* readEachPlaylistFile(SongList* list, char* fileName){
             free(pointer);
             break;
         }
+        token[strlen(token) - 1] = '\0';
 
         song = createSong(pointer, token);
         insertSongList(list, song);
@@ -114,4 +114,61 @@ void printSongList(SongList* list){
         }
         aux = aux->next;
     }
+}
+
+void refactoredSongList(SongList* list, PlaylistList* playlistlist){
+    Cell* aux = list->head;
+    Playlist* playlistaux;
+    
+    while(aux != NULL){
+        playlistaux = findPlaylist(playlistlist, getArtistName(aux->song));
+
+        if(playlistaux == NULL){
+            Song* newsong = createSong(getSongName(aux->song), getArtistName(aux->song));
+            SongList* newsonglist = initializeSongList(newsonglist);
+            insertSongList(newsonglist, newsong);
+            insertPlaylistList(playlistlist,getArtistName(aux->song), newsonglist);
+        }
+        else{
+            Song* newsong = createSong(getSongName(aux->song), getArtistName(aux->song));
+            insertSongList(getSongList(playlistaux), newsong);
+        }
+    
+        aux = aux->next;
+   }
+}
+
+void printSongListinFile(SongList* list,FILE* file){
+    Cell* aux = list->head;
+
+    while(aux != NULL) {
+        if(aux->song) {
+            printSonginFile(aux->song,file);
+        }
+        aux = aux->next;
+    }
+}
+
+int songListComparator(SongList *personSongList, SongList *friendSongList) {
+    Cell *aux = personSongList->head;
+    Cell *iteratorAux = NULL;
+    int equalSongs = 0;
+
+    while(aux != NULL) {
+        iteratorAux = friendSongList->head;
+
+        while(iteratorAux != NULL) {
+            if(aux->song && iteratorAux->song) {
+                if(strcmp(getSongName(aux->song), getSongName(iteratorAux->song)) == 0) {
+                    equalSongs++;
+                }
+            }
+
+            iteratorAux = iteratorAux->next;
+        }
+
+        aux = aux->next;
+    }
+
+    return equalSongs;
 }

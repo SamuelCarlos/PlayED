@@ -62,3 +62,14 @@ void printFriendship(Friendship* friendship) {
         aux = aux->next;
     }
 }
+
+int friendIterator(Friendship* friendship, char *friend) {
+    Cell *aux = friendship->head;
+
+    while(aux != NULL){
+        if(strcmp(aux->friendName, friend) == 0) return 1;
+
+        aux = aux->next;
+    }
+    return 0;
+}
